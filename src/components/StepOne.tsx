@@ -1,9 +1,17 @@
 import { Form, Formik, Field } from "formik";
+import { iData } from "./MyForm";
+interface Props {
+  next(arg: iData): void;
+  data: iData;
+}
 
-export const StepOne = () => {
+export const StepOne = (props: Props) => {
+  const handleSubmit = (values: iData) => {
+    props.next(values);
+  };
+
   return (
-    // @ts-ignore
-    <Formik>
+    <Formik initialValues={props.data} onSubmit={handleSubmit}>
       {() => (
         <Form>
           <p>Номер телефона</p>

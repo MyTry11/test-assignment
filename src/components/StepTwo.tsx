@@ -1,10 +1,18 @@
 import { Form, Formik, Field } from "formik";
+import { iData } from "./MyForm";
+interface Props {
+  next(arg: iData): void;
+  prev(arg: iData): void;
+  data: iData;
+}
 
-export const StepTwo = () => {
+export const StepTwo = (props: Props) => {
+  const handleSubmit = (values: iData) => {
+    props.next(values);
+  };
   return (
-    // @ts-ignore
-    <Formik>
-      {() => (
+    <Formik initialValues={props.data} onSubmit={handleSubmit}>
+      {({ values }) => (
         <Form>
           <p>Nickname</p>
           <Field name="nickName" />
@@ -15,7 +23,9 @@ export const StepTwo = () => {
 
           {/* checkbox */}
           <div>
-            <button type="button">Назад</button>
+            <button type="button" onClick={() => props.prev(values)}>
+              Назад
+            </button>
             <button type="submit">Далее</button>
           </div>
         </Form>

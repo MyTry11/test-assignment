@@ -3,17 +3,26 @@ import { schema } from "./schema";
 import { useState } from "react";
 import { StepOne } from "./StepOne";
 import { StepTwo } from "./StepTwo";
-// import CustomCheckbox from "./CustomCheckbox";
-// import CustomInput from "./CustomInput";
-// import CustomSelect from "./CustomSelect";
 
 // const onSubmit = async (values, actions) => {
 //   await new Promise((resolve) => setTimeout(resolve, 1000));
 //   actions.resetForm();
 // };
 
+export interface iData {
+  phone: string;
+  email: string;
+  nickName: string;
+  name: string;
+  surName: string;
+  advantages1: string;
+  advantages2: string;
+  advantages3: string;
+  about: string;
+}
+
 const MyForm = () => {
-  const [data, setData] = useState({
+  const [data, setData] = useState<iData>({
     phone: "",
     email: "",
     nickName: "",
@@ -25,7 +34,21 @@ const MyForm = () => {
     about: "",
   });
   const [currentStep, setCurrentStep] = useState(0);
-  const steps = [<StepOne />, <StepTwo />];
+
+  const handleNextStep = (newData: iData): void => {
+    setData((prev) => ({ ...prev, ...newData }));
+    setCurrentStep((prev) => prev + 1);
+  };
+
+  const handlePrevStep = (newData: iData): void => {
+    setData((prev) => ({ ...prev, ...newData }));
+    setCurrentStep((prev) => prev - 1);
+  };
+
+  const steps = [
+    <StepOne next={handleNextStep} data={data} />,
+    <StepTwo next={handleNextStep} prev={handlePrevStep} data={data} />,
+  ];
 
   return <>{steps[currentStep]}</>;
 };
