@@ -1,6 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
+import { act } from "react-dom/test-utils";
 
+export enum Sex {
+  default = "Не выбрано",
+  man = "man",
+  woman = "woman",
+}
 export interface IInputs {
   phone: string;
   email: string;
@@ -9,6 +15,7 @@ export interface IInputs {
   surName: string;
   advantages: string[];
   about: string;
+  sex: Sex;
 }
 
 interface IState {
@@ -22,22 +29,24 @@ const initialState: IState = {
     nickName: "",
     name: "",
     surName: "",
-    advantages: ["", "", ""],
+    advantages: ["ad1", "ad2", "ad3"],
     about: "",
+    sex: Sex.default,
   },
 };
 
 export const dataSlice = createSlice({
-  name: "dataR",
+  name: "data",
   initialState,
   reducers: {
-    setDataR: (state, action) => {
+    setData: (state, action) => {
       state.value = { ...state.value, ...action.payload };
       console.log(state.value);
     },
+    removeAdvantage: (state, action) => {},
   },
 });
 
-export const { setDataR } = dataSlice.actions;
+export const { setData } = dataSlice.actions;
 
 export default dataSlice.reducer;

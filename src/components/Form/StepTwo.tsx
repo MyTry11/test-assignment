@@ -1,39 +1,39 @@
 import { Form, Formik, Field } from "formik";
-import { iData } from "./MyForm";
-import { useAppDispatch, useAppSelector } from "../../hooks";
-import { setDataR } from "../../store/dataSlice";
-import { useNavigate } from "react-router-dom";
+import { IInputs } from "../../store/dataSlice";
+import { useAppSelector, useAppDispatch } from "../../hooks";
 interface Props {
-  next(arg: iData): void;
-  prev(arg: iData): void;
-  dataR: iData;
+  next(arg: IInputs): void;
+  // data: IInputs;
+  prev(arg: IInputs): void;
 }
 
 export const StepTwo = (props: Props) => {
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
-  const dataR = useAppSelector((state) => state.dataR.value);
-  const handleSubmit = (values: iData) => {
+  const dispatch = useAppDispatch;
+  const data = useAppSelector((state) => state.data.value);
+  const handleSubmit = (values: IInputs) => {
     props.next(values);
   };
-  const openMain = () => {
-    navigate("/");
-  };
+  const removeInput = () => {};
+
   return (
-    <Formik initialValues={dataR} onSubmit={handleSubmit}>
+    <Formik initialValues={data} onSubmit={handleSubmit}>
       {({ values }) => (
         <Form>
-          <p>Nickname</p>
-          <Field name="nickName" />
-          <p>Name</p>
-          <Field name="name"></Field>
-          <p>Surname</p>
-          <Field name="surName" />
-
-          {/* checkbox */}
+          <p>Advantages</p>
+          {data.advantages.map((advantageField, index) => (
+            <div>
+              <Field
+                name={data.advantages[index]}
+                className="block"
+                placeholder="Placeholder"
+              />
+              <button onClick={removeInput}>Remove</button>
+            </div>
+          ))}
           <div>
-            <button onClick={openMain}>Назад</button>
-
+            <button type="button" onClick={() => props.prev(values)}>
+              Назад
+            </button>
             <button type="submit">Далее</button>
           </div>
         </Form>

@@ -4,7 +4,7 @@ import currentStepSlice from "./currentStepSlice";
 
 export const store = configureStore({
   reducer: {
-    dataR: dataSlice,
+    data: dataSlice,
     currentStepR: currentStepSlice,
   },
 });

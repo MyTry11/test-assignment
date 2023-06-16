@@ -1,32 +1,36 @@
 import { Form, Formik, Field } from "formik";
-import { iData } from "./MyForm";
+import { IInputs } from "../../store/dataSlice";
 import { useAppSelector, useAppDispatch } from "../../hooks";
 interface Props {
-  next(arg: iData): void;
-  dataR: iData;
-  prev(arg: iData): void;
+  next(arg: IInputs): void;
+  // data: IInputs;
+  prev(arg: IInputs): void;
 }
 
 export const StepThree = (props: Props) => {
   const dispatch = useAppDispatch;
-  const dataR = useAppSelector((state) => state.dataR.value);
-  const handleSubmit = (values: iData) => {
+  const data = useAppSelector((state) => state.data.value);
+  const handleSubmit = (values: IInputs) => {
     props.next(values);
   };
+  const removeInput = () => {};
 
   return (
-    <Formik initialValues={dataR} onSubmit={handleSubmit}>
+    <Formik initialValues={data} onSubmit={handleSubmit}>
       {({ values }) => (
         <Form>
-          <p>Advantage1</p>
-          <Field name="Advantage1" />
-          <p>Advantage2</p>
-          <Field name="Advantage2"></Field>
+          <p>About</p>
+          <Field
+            name="about"
+            placeholder="Placeholder"
+            className="w-[680px] h-[84px]"
+          />
+
           <div>
             <button type="button" onClick={() => props.prev(values)}>
               Назад
             </button>
-            <button type="submit">Далее</button>
+            <button type="submit">Отправить</button>
           </div>
         </Form>
       )}

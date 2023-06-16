@@ -1,14 +1,14 @@
 import { Form, Formik, Field } from "formik";
-import { iData } from "./Form/MyForm";
+import { IInputs } from "../store/dataSlice";
 import { useRef } from "react";
 import { IMaskInput, IMaskMixin } from "react-imask";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../hooks";
 
 export const Main = () => {
-  const data = useAppSelector((state) => state.dataR.value);
+  const data = useAppSelector((state) => state.data.value);
   const navigate = useNavigate();
-  const handleSubmit = (values: iData) => {
+  const handleSubmit = (values: IInputs) => {
     navigate("/form");
   };
 
