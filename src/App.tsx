@@ -9,7 +9,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Main />} />
-        <Route path="form" element={<MyForm />} />
+        <Route path="/create" element={<MyForm />} />
       </Routes>
     </BrowserRouter>
   );

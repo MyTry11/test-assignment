@@ -1,17 +1,21 @@
 import { Form, Formik, Field } from "formik";
-import { IInputs } from "../../store/dataSlice";
+import { IInputs, setData } from "../../store/dataSlice";
 import { useAppSelector, useAppDispatch } from "../../hooks";
 interface Props {
-  next(arg: IInputs): void;
+  next(): void;
   // data: IInputs;
-  prev(arg: IInputs): void;
+  prev(): void;
 }
 
 export const StepThree = (props: Props) => {
-  const dispatch = useAppDispatch;
+  const dispatch = useAppDispatch();
   const data = useAppSelector((state) => state.data.value);
-  const handleSubmit = (values: IInputs) => {
-    props.next(values);
+  const handleSubmit = () => {
+    props.next();
+  };
+  const handleChange = (e: any) => {
+    const { name, value } = e.currentTarget;
+    dispatch(setData({ [name]: value }));
   };
   const removeInput = () => {};
 
@@ -24,10 +28,12 @@ export const StepThree = (props: Props) => {
             name="about"
             placeholder="Placeholder"
             className="w-[680px] h-[84px]"
+            onChange={handleChange}
+            value={data.about}
           />
 
           <div>
-            <button type="button" onClick={() => props.prev(values)}>
+            <button type="button" onClick={() => props.prev()}>
               Назад
             </button>
             <button type="submit">Отправить</button>
